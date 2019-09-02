@@ -96,7 +96,11 @@ public class PdfConverter implements Runnable {
         });
         WebSettings settings = mWebView.getSettings();
         settings.setDefaultTextEncodingName("utf-8");
-        mWebView.loadData(mHtmlString, "text/HTML; charset=utf-8", null);
+        if (mHtmlString.indexOf("http://") != -1 || mHtmlString.indexOf("https://") != -1) {// 包含
+            mWebView.loadData(mHtmlString, "text/HTML; charset=utf-8", null);
+        }else {
+            mWebView.loadDataWithBaseURL("", mHtmlString, "text/html", "UTF-8", null);
+        }
     }
 
     public PrintAttributes getPdfPrintAttrs() {
